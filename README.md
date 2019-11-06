@@ -38,8 +38,8 @@ Using data list to login
 | nick@shield.com | password |
 
 #### Features
-Basic login page practice
-Add logout function (Use Express-session)
++ Basic login page practice
++ Add logout function (Use Express-session)
 ##### Deployment
 + Node -v10.15.3 
 + NPM -v6.4.1 

@@ -15,9 +15,9 @@ app.use(bodyParser.urlencoded({ extended: true }))
 app.use(session({
   secret: 'secret', // 對session id 相關的cookie 進行簽名
   resave: true,
-  saveUninitialized: false, // 是否儲存未初始化的會話
+  saveUninitialized: false, // 強制將未初始化的session存回 session store，未初始化的意思是它是新的而且未被修改。
   cookie: {
-    maxAge: 1000 * 60 * 5, // 設定 session 的有效時間，單位毫秒
+    maxAge: 1000 * 60 * 3, // 設定 session 的有效時間，單位毫秒
   },
 }));
 
@@ -39,7 +39,7 @@ app.post('/', (req, res) => {
   if (memberCheck(inputEmail, inputPassword).length > 0) {
     const name = memberCheck(inputEmail, inputPassword)
     req.session.userName = name // 登入成功，設定 session
-    console.log(req.session)
+    console.log(req.sessionID)
     res.render('show', { name })
   } else {
     res.render('index', { errorMsg })
@@ -48,7 +48,11 @@ app.post('/', (req, res) => {
 })
 
 app.get('/logout', (req, res) => {
-  req.session.userName = null; // 刪除session
+  // 刪除session
+  req.session.destroy(function (err) {
+    // cannot access session here
+    console.log(req.session)
+  })
   res.redirect('/');
 });
 

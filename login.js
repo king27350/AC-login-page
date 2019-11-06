@@ -35,15 +35,15 @@ function memberCheck(inputEmail, inputPassword) {
   })
   // check password 
   if (found === undefined) {
-    return false
+    return ''
   }
   else if (found.password === inputPassword) {
     console.log('login success')
 
-    return [true, found.firstName]
+    return found.firstName
   } else {
     console.log('wrong email and password')
-    return false
+    return ''
   }
 
 }
